@@ -173,7 +173,7 @@ void CombineLEDsSM()
 int main(void)
 {
 	DDRB = 0xFF; PORTB = 0x00;
-	threeLedStates = Start;
+	threeLedStates = ThreeLedStart;
 	blinkingStates = BlinkingStart;
 	combinedStates = CombinedStart;
 	threeLedTracker = 0;
