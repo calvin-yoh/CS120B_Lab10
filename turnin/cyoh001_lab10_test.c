@@ -1,14 +1,17 @@
-/*Author: cyoh001
-* Partner(s) Name :
-	*Lab Section :
-*Assignment : Lab #  Exercise #
-* Exercise Description : [optional - include for your own benefit]
-*
-*I acknowledge all content contained herein, excluding template or example
-* code, is my own original work.
-*/
+/*	Author: lab
+ *  Partner(s) Name:
+ *	Lab Section:
+ *	Assignment: Lab #  Exercise #
+ *	Exercise Description: [optional - include for your own benefit]
+ *
+ *	I acknowledge all content contained herein, excluding template or example
+ *	code, is my own original work.
+ */
 #include <avr/io.h>
 #include <avr/interrupt.h>
+#ifdef _SIMULATE_
+#include "simAVRHeader.h"
+#endif
 
 volatile unsigned char TimerFlag = 0;
 unsigned long _avr_timer_M = 1;
@@ -65,7 +68,7 @@ void ThreeLEDsSM()
 		break;
 	}
 	case ThreeLedFirst:
-	{	
+	{
 		threeLedStates = ThreeLedSecond;
 		break;
 	}
@@ -75,7 +78,7 @@ void ThreeLEDsSM()
 		break;
 	}
 	case ThreeLedThird:
-	{	
+	{
 		threeLedStates = ThreeLedFirst;
 		break;
 	}
@@ -192,7 +195,7 @@ int main(void)
 		{
 			BlinkingLEDSM();
 			blinkingTracker = 0;
-		}	
+		}
 		CombineLEDsSM();
 		while (!TimerFlag);
 		TimerFlag = 0;
