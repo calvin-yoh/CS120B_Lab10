@@ -224,6 +224,7 @@ int main(void)
 	threeLedStates = ThreeLedStart;
 	blinkingStates = BlinkingStart;
 	combinedStates = CombinedStart;
+	speakerStates = SpeakerStart;
 	threeLedTracker = 0;
 	blinkingTracker = 0;
 	speakerTracker = 0;
