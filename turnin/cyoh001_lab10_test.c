@@ -183,12 +183,12 @@ int main(void)
 	TimerOn();
 	while (1)
 	{
-		if (threeLedTracker >= 10)
+		if (threeLedTracker >= 1000)
 		{
 			ThreeLEDsSM();
 			threeLedTracker = 0;
 		}
-		if (blinkingTracker >= 10)
+		if (blinkingTracker >= 1000)
 		{
 			BlinkingLEDSM();
 			threeLedTracker = 0;
