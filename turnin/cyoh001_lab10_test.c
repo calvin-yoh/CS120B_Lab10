@@ -191,7 +191,7 @@ int main(void)
 		if (blinkingTracker >= 1000)
 		{
 			BlinkingLEDSM();
-			threeLedTracker = 0;
+			blinkingTracker = 0;
 		}	
 		CombineLEDsSM();
 		while (!TimerFlag);
