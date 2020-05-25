@@ -243,7 +243,7 @@ int main(void)
 			BlinkingLEDSM();
 			blinkingTracker = 0;
 		}
-		if ((speakerTracker >= 2) && ((~PINA & 0x04) == 0x04))
+		if ((speakerTracker >= 5) && ((~PINA & 0x04) == 0x04))
 		{
 			SpeakerSM();
 			speakerTracker = 0;
