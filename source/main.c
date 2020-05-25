@@ -243,7 +243,7 @@ int main(void)
 			BlinkingLEDSM();
 			blinkingTracker = 0;
 		}
-		if (speakerTracker >= 1000)
+		if (speakerTracker >= 2)
 		{
 			SpeakerSM();
 			speakerTracker = 0;
