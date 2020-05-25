@@ -21,7 +21,7 @@ void TimerOn()
 	TCCR1B = 0x0B;
 	OCR1A = 125;
 	TIMSK1 = 0x02;
-	TthreeLedTracker1 = 0;
+	TCNT1 = 0;
 	_avr_timer_threeLedTrackercurr = _avr_timer_M;
 	SREG |= 0x80;
 }
