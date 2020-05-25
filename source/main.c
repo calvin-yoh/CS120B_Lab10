@@ -51,12 +51,15 @@ void TimerSet(unsigned long M)
 enum States_One { ThreeLedStart, ThreeLedFirst, ThreeLedSecond, ThreeLedThird } threeLedStates;
 enum States_Two { BlinkingStart, BlinkingOn, BlinkingOff } blinkingStates;
 enum States_Three { CombinedStart, Display } combinedStates;
+enum States_Four { SpeakerStart, SpeakerOn, SpeakerOff } speakerStates;
 unsigned char blinkingLED = 0x00;
 unsigned char threeLEDs = 0x00;
+unsigned char speakerTemp = 0x00;
 unsigned char tempB = 0x00;
 unsigned long blinkingTracker = 0;
 unsigned long threeLedTracker = 0;
-const unsigned long period = 100;
+unsigned long speakerTracker = 0;
+const unsigned long period = 1;
 
 void ThreeLEDsSM()
 {
@@ -148,6 +151,47 @@ void BlinkingLEDSM()
 		break;
 	}
 }
+
+void SpeakerSM()
+{
+	switch (speakerStates) // Transitions
+	{
+	case SpeakerStart:
+	{
+		speakerStates = SpeakerOn;
+		break;
+	}
+	case SpeakerOn:
+	{
+		speakerStates = SpeakerOff;
+		break;
+	}
+	case SpeakerOff:
+	{
+		speakerStates = SpeakerOn;
+		break;
+	}
+	default:
+		break;
+	}
+
+	switch (speakerStates) // State Actions
+	{
+	case SpeakerOn:
+	{
+		speakerTemp = 0x10;
+		break;
+	}
+	case SpeakerOff:
+	{
+		speakerTemp = 0x00;
+		break;
+	}
+	default:
+		break;
+	}
+}
+
 void CombineLEDsSM()
 {
 	switch (combinedStates) // Transitions
@@ -164,7 +208,7 @@ void CombineLEDsSM()
 	{
 	case Display:
 	{
-		tempB = blinkingLED | threeLEDs;
+		tempB = blinkingLED | threeLEDs | speakerTemp;
 		PORTB = tempB;
 		break;
 	}
@@ -175,14 +219,16 @@ void CombineLEDsSM()
 
 int main(void)
 {
+	DDRA = 0x00; PORTA = 0xFF;
 	DDRB = 0xFF; PORTB = 0x00;
 	threeLedStates = ThreeLedStart;
 	blinkingStates = BlinkingStart;
 	combinedStates = CombinedStart;
 	threeLedTracker = 0;
 	blinkingTracker = 0;
+	speakerTracker = 0;
 
-	TimerSet(100);
+	TimerSet(1);
 	TimerOn();
 	while (1)
 	{
@@ -196,10 +242,20 @@ int main(void)
 			BlinkingLEDSM();
 			blinkingTracker = 0;
 		}
+		if (speakerTracker >= 2 && (~PINA == 0x04))
+		{
+			SpeakerSM();
+			speakerTracker = 0;
+		}
+		else
+		{
+			speakerTemp = 0x00;
+		}
 		CombineLEDsSM();
 		while (!TimerFlag);
 		TimerFlag = 0;
 		blinkingTracker += period;
 		threeLedTracker += period;
+		speakerTracker += period;
 	}
 }
