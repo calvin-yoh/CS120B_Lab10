@@ -208,7 +208,7 @@ void CombineLEDsSM()
 	{
 	case Display:
 	{
-		tempB = blinkingLED | threeLEDs | speakerTemp;
+		tempB = speakerTemp | blinkingLED | threeLEDs ;
 		PORTB = tempB;
 		break;
 	}
