@@ -208,7 +208,7 @@ void CombineLEDsSM()
 	{
 	case Display:
 	{
-		tempB = blinkingLED | threeLEDs | speakerTemp;
+		tempB = speakerTemp | blinkingLED | threeLEDs;
 		PORTB = tempB;
 		break;
 	}
@@ -224,6 +224,7 @@ int main(void)
 	threeLedStates = ThreeLedStart;
 	blinkingStates = BlinkingStart;
 	combinedStates = CombinedStart;
+	speakerStates = SpeakerStart;
 	threeLedTracker = 0;
 	blinkingTracker = 0;
 	speakerTracker = 0;
@@ -242,14 +243,10 @@ int main(void)
 			BlinkingLEDSM();
 			blinkingTracker = 0;
 		}
-		if (speakerTracker >= 2 && (~PINA == 0x04))
+		if ((speakerTracker >= 2) && ((~PINA & 0x04) == 0x04))
 		{
 			SpeakerSM();
 			speakerTracker = 0;
-		}
-		else
-		{
-			speakerTemp = 0x00;
 		}
 		CombineLEDsSM();
 		while (!TimerFlag);
