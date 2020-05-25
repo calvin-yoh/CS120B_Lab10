@@ -248,10 +248,6 @@ int main(void)
 			SpeakerSM();
 			speakerTracker = 0;
 		}
-		else
-		{
-			speakerTemp = 0x00;
-		}
 		CombineLEDsSM();
 		while (!TimerFlag);
 		TimerFlag = 0;
