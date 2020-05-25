@@ -160,20 +160,20 @@ void FreqChangeSM()
 	{
 	case FreqChangeStart:
 	{
-		state = Wait;
+		freqStates = Wait;
 		break;
 	}
 	case Wait:
 	{
 		if ((~PINA & 0x01) == 0x01)
 		{
-			state = Increase;
+			freqStates = Increase;
 			++currentFreq;
 			break;
 		}
 		else if ((~PINA & 0x02) == 0x02)
 		{
-			state = Decrease;
+			freqStates = Decrease;
 			if ((currentFreq - 1) < 1)
 			{
 				currentFreq = 1;
@@ -186,7 +186,7 @@ void FreqChangeSM()
 		}
 		else
 		{
-			state = Wait;
+			freqStates = Wait;
 			break;
 		}
 	}
@@ -194,12 +194,12 @@ void FreqChangeSM()
 	{
 		if ((~PINA & 0x01) == 0x01)
 		{
-			state = Increase;
+			freqStates = Increase;
 			break;
 		}
 		else
 		{
-			state = Wait;
+			freqStates = Wait;
 			break;
 		}
 	}
@@ -207,12 +207,12 @@ void FreqChangeSM()
 	{
 		if ((~PINA & 0x02) == 0x02)
 		{
-			state = Decrease;
+			freqStates = Decrease;
 			break;
 		}
 		else
 		{
-			state = Wait;
+			freqStates = Wait;
 			break;
 		}
 	}
